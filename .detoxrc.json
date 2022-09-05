@@ -5,13 +5,13 @@
   "apps": {
     "ios.dev.debug": {
       "type": "ios.app",
-      "binaryPath": "ios/build/Build/Products/DebugDev-iphonesimulator/RN Boilerplate Dev.app",
-      "build": "xcodebuild -workspace ios/RNB.xcworkspace -scheme RNBDev -configuration DebugDev -sdk iphonesimulator -derivedDataPath ios/build"
+      "binaryPath": "ios/build/Build/Products/DebugDev-iphonesimulator/PodoTodo Dev.app",
+      "build": "xcodebuild -workspace ios/PodoTodo.xcworkspace -scheme PodoTodoDev -configuration DebugDev -sdk iphonesimulator -derivedDataPath ios/build"
     },
     "ios.dev.release": {
       "type": "ios.app",
-      "binaryPath": "ios/build/Build/Products/ReleaseDev-iphonesimulator/RN Boilerplate Dev.app",
-      "build": "xcodebuild -workspace ios/RNB.xcworkspace -scheme RNBDev -sdk iphonesimulator -configuration ReleaseDev -derivedDataPath ios/build -quiet"
+      "binaryPath": "ios/build/Build/Products/ReleaseDev-iphonesimulator/PodoTodo Dev.app",
+      "build": "xcodebuild -workspace ios/PodoTodo.xcworkspace -scheme PodoTodoDev -sdk iphonesimulator -configuration ReleaseDev -derivedDataPath ios/build -quiet"
     },
     "android.dev.debug": {
       "type": "android.apk",

@@ -1,4 +1,4 @@
-package com.rnb.rnboilerplate;
+package com.paceprogrammer.podotodo;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -16,7 +16,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "RNB";
+    return "PodoTodo";
   }
 
   /**

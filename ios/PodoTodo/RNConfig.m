@@ -1,6 +1,6 @@
 //
 //  RNConfig.m
-//  RNB
+//  PodoTodo
 //
 //  Created by Radi Rusadi on 04/09/22.
 //

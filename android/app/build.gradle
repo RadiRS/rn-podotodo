@@ -28,7 +28,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.rnb.rnboilerplate"
+        applicationId "com.paceprogrammer.podotodo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
@@ -136,15 +136,15 @@ android {
     flavorDimensions "env"
     productFlavors {
         dev {
-            resValue "string", "app_name", "RN Boilerplate Dev"
+            resValue "string", "app_name", "PodoTodo Dev"
             applicationIdSuffix ".dev"
         }
         stag {
-            resValue "string", "app_name", "RN Boilerplate Stag"
+            resValue "string", "app_name", "PodoTodo Stag"
             applicationIdSuffix ".stag"
         }
         prod {
-            resValue "string", "app_name", "RN Boilerplate"
+            resValue "string", "app_name", "PodoTodo"
         }
     }
 

@@ -15,23 +15,33 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "RNB Dev.app"
-               BlueprintName = "RNB"
-               ReferencedContainer = "container:RNB.xcodeproj">
+               BuildableName = "PodoTodo Dev.app"
+               BlueprintName = "PodoTodo"
+               ReferencedContainer = "container:PodoTodo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "DebugStag"
+      buildConfiguration = "DebugDev"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "PodoTodoTests.xctest"
+               BlueprintName = "PodoTodoTests"
+               ReferencedContainer = "container:PodoTodo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "DebugStag"
+      buildConfiguration = "DebugDev"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -45,14 +55,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNB Dev.app"
-            BlueprintName = "RNB"
-            ReferencedContainer = "container:RNB.xcodeproj">
+            BuildableName = "PodoTodo Dev.app"
+            BlueprintName = "PodoTodo"
+            ReferencedContainer = "container:PodoTodo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "ReleaseStag"
+      buildConfiguration = "ReleaseDev"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -62,17 +72,17 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNB Dev.app"
-            BlueprintName = "RNB"
-            ReferencedContainer = "container:RNB.xcodeproj">
+            BuildableName = "PodoTodo Dev.app"
+            BlueprintName = "PodoTodo"
+            ReferencedContainer = "container:PodoTodo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "DebugStag">
+      buildConfiguration = "DebugDev">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "ReleaseStag"
+      buildConfiguration = "ReleaseDev"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
