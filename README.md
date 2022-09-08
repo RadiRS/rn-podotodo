@@ -2,9 +2,9 @@
 
 ![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Continuous Integration](https://github.com/RadiRS/rn-boilerplate/actions/workflows/ci.yml/badge.svg)](https://github.com/RadiRS/rn-boilerplate/actions/workflows/ci.yml)
-[![Android Build](https://github.com/RadiRS/rn-boilerplate/actions/workflows/android-build.yml/badge.svg)](https://github.com/RadiRS/rn-boilerplate/actions/workflows/android-build.yml)
-[![IOS Build](https://github.com/RadiRS/rn-boilerplate/actions/workflows/ios-build.yml/badge.svg)](https://github.com/RadiRS/rn-boilerplate/actions/workflows/ios-build.yml)
+[![Continuous Integration](https://github.com/RadiRS/rn-podotodo/actions/workflows/ci.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ci.yml)
+[![Android Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/android-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/android-build.yml)
+[![IOS Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml)
 
 This is a boilerplate for react native project which is include some configuration
 
@@ -24,10 +24,10 @@ What things you need to install the software and how to install them
 
 A step by step series of examples that tell you how to get a development env running
 
-Clone the repositori via http or ssh
+Clone the repository via http or ssh
 
 ```
-git clone https://github.com/RadiRS/rn-boilerplate.git your_app_name
+git clone https://github.com/RadiRS/rn-podotodo.git your_app_name
 ```
 
 ```
@@ -91,7 +91,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/RadiRS/rn-boilerplate/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/RadiRS/rn-podotodo/tags).
 
 <p>&nbsp;</p>
 
@@ -99,7 +99,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 - **Radi Rusadi** - _Initial work_ - [RadiRS](https://github.com/RadiRS)
 
-See also the list of [contributors](https://github.com/RadiRS/rn-boilerplate/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/RadiRS/rn-podotodo/contributors) who participated in this project.
 
 <p>&nbsp;</p>
 
