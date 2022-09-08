@@ -45,7 +45,7 @@ const styles = (themes: ThemeVariables) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: themes.Colors.splashBakground,
+      backgroundColor: themes.Colors.splashBackground,
     },
   });
 
