@@ -5,11 +5,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { RootNavigator } from '@/navigators';
 import { persistor, store } from './store';
 import './config/translations';
+import { SplashContainer } from '@/containers';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      <PersistGate loading={<SplashContainer />} persistor={persistor}>
         <RootNavigator />
       </PersistGate>
     </Provider>

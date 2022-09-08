@@ -22,5 +22,6 @@ const baseQueryWithInterceptor: BaseQueryFn<
 
 export const api = createApi({
   baseQuery: baseQueryWithInterceptor,
+  tagTypes: ['Todos'],
   endpoints: () => ({}),
 });
