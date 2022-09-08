@@ -1,56 +1,48 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { TextInput, View } from 'react-native';
 
-import { useTheme } from '@/hooks';
-import { changeTheme, ThemeState } from '@/store/theme';
-import Translations from '@/config/translations';
-import { Button, Text, SafeArea } from '@/components/ui';
+import { SafeArea, Text, ScrollView, Button } from '@/components/ui';
 
-import HeaderSection from './header-section.component';
+interface TodoInterface {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 const HomeContainer = () => {
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { Fonts, Gutters } = useTheme();
-
-  const onPressChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
-    dispatch(changeTheme({ theme, darkMode }));
-  };
+  const [todo, setTodo] = React.useState<string>('');
+  const todos: TodoInterface[] = [
+    {
+      id: 1,
+      title: 'Todo One',
+      completed: false,
+    },
+  ];
 
   return (
     <SafeArea padder>
-      <HeaderSection />
-      <View style={Gutters.regularBMargin} />
-      <Text style={Fonts.textRegular}>
-        {t('example.helloUser', { name: 'John' })}
+      <Text variant="title-small" style={{ marginBottom: 20 }}>
+        Todo Application
       </Text>
-      <Text style={Fonts.textSmall}>{t('welcome')}</Text>
-      <View style={Gutters.regularBMargin} />
-      <Button
-        onPress={() => Translations.changeLanguage('id')}
-        appearance="outlined"
-        style={Gutters.regularBMargin}>
-        Change to Bahasa
-      </Button>
-      <Button
-        onPress={() => Translations.changeLanguage('en')}
-        style={Gutters.regularBMargin}>
-        Change to English
-      </Button>
-      <Button
-        testID="dark-button"
-        appearance="outlined"
-        onPress={() => onPressChangeTheme({ darkMode: true })}
-        style={Gutters.regularBMargin}>
-        Change to Dark Mode
-      </Button>
-      <Button
-        testID="light-button"
-        onPress={() => onPressChangeTheme({ darkMode: false })}>
-        Change to Light Mode
-      </Button>
+      <TextInput
+        value={todo}
+        placeholder="enter new todo"
+        onChangeText={setTodo}
+        style={{ height: 40, borderWidth: 1, padding: 10, marginBottom: 16 }}
+      />
+      <Button>Save</Button>
+
+      <Text style={{ marginTop: 16 * 2 }}>List Todo</Text>
+      <ScrollView contentContainerStyle={{ paddingVertical: 16 }}>
+        {todos.map(item => (
+          <View style={{ padding: 16, borderWidth: 1, borderColor: 'grey' }}>
+            <Text>{item.title}</Text>
+            <Text variant="small">
+              Status: {item.completed ? 'done' : 'in-progress'}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
     </SafeArea>
   );
 };
