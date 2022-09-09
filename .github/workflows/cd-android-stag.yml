@@ -6,39 +6,52 @@ on:
       - staging
 
 jobs:
-  android-build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-
       - name: Check out Git repository
         uses: actions/checkout@v3
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.4.1
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.4.1
         with:
           node-version: 16
           cache: 'yarn'
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn test
 
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.4.1
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - name: Cache Gradle Wrapper
         uses: actions/cache@v3.0.8
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
       - name: Cache Gradle Dependencies
         uses: actions/cache@v3.0.8
         with:
@@ -46,47 +59,32 @@ jobs:
           key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-caches-
-
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-
-      - name: Build Android Staging apk
+      - name: Build Android Development apk
         run: |
           cd android && ./gradlew assembleStagRelease
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           name: app-stag-release.apk
           path: android/app/build/outputs/apk/stag/release/
 
-      # - name: Build Android App Bundle
-      #   run: |
-      #     cd android && ./gradlew bundleStagRelease --no-daemon
-      # - name: Sign App Bundle
-      #   id: sign_app
-      #   uses: r0adkll/sign-android-release@v1
-      #   with:
-      #     releaseDirectory: android/app/build/outputs/bundle/stag/release/
-      #     signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-      #     alias: ${{ secrets.ANDROID_SIGNING_ALIAS }}
-      #     keyStorePassword: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
-      #     keyPassword: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
-
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: Signed App Bundle
-      #     path: ${{steps.sign_app.outputs.signedReleaseFile}}
-
-      # - name: Deploy to Play Store (ALPHA)
-      #   uses: r0adkll/upload-google-play@v1
-      #   with:
-      #     serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT }}
-      #     packageName: com.testedapp
-      #     releaseFile: ${{steps.sign_app.outputs.signedReleaseFile}}
-      #     track: alpha
-      #     inAppUpdatePriority: 3
-      #     userFraction: 0.5
-      #     whatsNewDirectory: android/release-notes/
-      # mappingFile: android/app/build/outputs/mapping/release/mapping.txt
+  distribution:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: staging
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: app-stag-release.apk
+      - name: Distribute app via Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          file: app-stag-release.apk
+          groups: ${{ secrets.FIREBASE_GROUPS }}
+          releaseNotes: ${{ github.event.head_commit.message }}
