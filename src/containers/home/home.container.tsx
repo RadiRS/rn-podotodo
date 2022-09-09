@@ -2,6 +2,7 @@ import React from 'react';
 import { TextInput, View, Switch } from 'react-native';
 
 import { SafeArea, Text, ScrollView, Button } from '@/components/ui';
+import AddButton from './floating-action-button.component';
 
 import { addTodo, deleteTodo, selectTodos, toggleComplete } from '@/store/todo';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -74,6 +75,7 @@ const HomeContainer = () => {
           </View>
         ))}
       </ScrollView>
+      <AddButton />
     </SafeArea>
   );
 };
