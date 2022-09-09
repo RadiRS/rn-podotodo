@@ -64,17 +64,12 @@ jobs:
       
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
-        env:
-          firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
-          firebaseGroups: ${{ secrets.FIREBASE_GROUPS }}
-          firebaseAppId: ${{ secrets.FIREBASE_APP_ID }}
-          notes: ${{ github.event.head_commit.message }}
         with:
-          appId: $firebaseAppId
-          token: $firebaseToken
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
           file: android/app/build/outputs/apk/dev/release/app-dev-release.apk
-          groups: $firebaseGroups
-          releaseNotes: $notes
+          groups: ${{ secrets.FIREBASE_GROUPS }}
+          releaseNotes: ${{ github.event.head_commit.message }}
 
 
 #   distribution-dev:
