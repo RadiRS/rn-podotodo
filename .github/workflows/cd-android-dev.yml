@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [android-build]
     environment:
-      name: development
+      name: develop
 
     steps:
       - name: Distribute app via Firebase App Distribution
