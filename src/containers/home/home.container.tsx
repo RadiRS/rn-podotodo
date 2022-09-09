@@ -1,35 +1,22 @@
 import React from 'react';
-import { TextInput, View, ActivityIndicator, Switch } from 'react-native';
-
-import {
-  useGetTodosQuery,
-  useAddTodoMutation,
-  useDeleteTodoMutation,
-  useUpdateTodoMutation,
-} from '@/services/modules/todo';
+import { TextInput, View, Switch } from 'react-native';
 
 import { SafeArea, Text, ScrollView, Button } from '@/components/ui';
 
-const HomeContainer = () => {
-  const [newTodo, setNewTodo] = React.useState<string>('');
-  const [addTodo] = useAddTodoMutation();
-  const [updateTodo] = useUpdateTodoMutation();
-  const [deleteTodo] = useDeleteTodoMutation();
+import { addTodo, deleteTodo, selectTodos, toggleComplete } from '@/store/todo';
+import { useAppDispatch, useAppSelector } from '@/store';
 
-  const { data, isLoading, isSuccess, isError, error } = useGetTodosQuery();
+const HomeContainer = () => {
+  const dispatch = useAppDispatch();
+  const [newTodo, setNewTodo] = React.useState<string>('');
+  const todos = useAppSelector(selectTodos);
 
   const onPressSubmit = () => {
     if (!newTodo) {
       return;
     }
 
-    const params = {
-      userId: 1,
-      title: newTodo,
-      completed: false,
-    };
-
-    addTodo(params);
+    dispatch(addTodo(newTodo));
     setNewTodo('');
   };
 
@@ -48,51 +35,45 @@ const HomeContainer = () => {
         Save
       </Button>
 
-      {isLoading && <ActivityIndicator />}
-      {isError && <Text status="error">{error.error}</Text>}
-      {isSuccess && (
-        <>
-          <Text style={{ marginTop: 16 * 2 }}>List Todo</Text>
-          <ScrollView contentContainerStyle={{ paddingVertical: 16 }}>
-            {data.map(item => (
-              <View
-                key={item.id}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 16,
-                  borderWidth: 1,
-                  borderColor: 'grey',
-                  marginBottom: 16,
-                }}>
-                <View style={{ flex: 1, paddingRight: 16 }}>
-                  <Text numberOfLines={2}>{item.title}</Text>
-                  <Text variant="small">
-                    status: {item.completed ? 'done' : 'in-progress'}
-                  </Text>
-                </View>
-                <View>
-                  <Switch
-                    thumbColor={item.completed ? '#f5dd4b' : '#f4f3f4'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => {
-                      updateTodo({ ...item, completed: !item.completed });
-                    }}
-                    value={item.completed}
-                  />
-                  <Button
-                    status="error"
-                    size="small"
-                    style={{ marginTop: 12 }}
-                    onPress={() => deleteTodo(item.id)}>
-                    Delete
-                  </Button>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-        </>
-      )}
+      <Text style={{ marginTop: 16 * 2 }}>List Todo</Text>
+      <ScrollView contentContainerStyle={{ paddingVertical: 16 }}>
+        {todos.map(item => (
+          <View
+            key={item.id}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 16,
+              borderWidth: 1,
+              borderColor: 'grey',
+              marginBottom: 16,
+            }}>
+            <View style={{ flex: 1, paddingRight: 16 }}>
+              <Text numberOfLines={2}>{item.title}</Text>
+              <Text variant="small">
+                status: {item.completed ? 'done' : 'in-progress'}
+              </Text>
+            </View>
+            <View>
+              <Switch
+                thumbColor={item.completed ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => {
+                  dispatch(toggleComplete(item.id));
+                }}
+                value={item.completed}
+              />
+              <Button
+                status="error"
+                size="small"
+                style={{ marginTop: 12 }}
+                onPress={() => dispatch(deleteTodo(item.id))}>
+                Delete
+              </Button>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </SafeArea>
   );
 };
