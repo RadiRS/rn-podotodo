@@ -1,9 +1,11 @@
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+
 import { Button, Text } from '@/components/ui';
 import { ThemeVariables } from '@/config/theme/theme';
 import { useTheme } from '@/hooks';
 import { Todo } from '@/store/todo';
-import React from 'react';
-import { StyleSheet, Switch, View } from 'react-native';
 
 interface TodoProps {
   todo: Todo;
@@ -16,26 +18,34 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
   const s = styles(theme);
 
   return (
-    <View key={todo.id} style={s.container}>
+    <TouchableOpacity
+      key={todo.id}
+      style={s.container}
+      onPress={onPressComplete}
+      activeOpacity={0.9}>
       <View style={s.titleContainer}>
-        <Text numberOfLines={2}>{todo.title}</Text>
-        <Text variant="small">
-          status: {todo.completed ? 'done' : 'in-progress'}
+        <BouncyCheckbox
+          disableBuiltInState
+          size={25}
+          bounceEffect={0}
+          isChecked={todo.completed}
+          fillColor={theme.Colors.primary}
+          innerIconStyle={s.checkbox}
+          onPress={onPressComplete}
+        />
+        <Text
+          numberOfLines={2}
+          status={todo.completed ? 'disabled' : 'basic'}
+          style={[s.titleText, todo.completed && s.lineThrough]}>
+          {todo.title}
         </Text>
       </View>
       <View>
-        <Switch
-          thumbColor={todo.completed ? '#f5dd4b' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={onPressComplete}
-          value={todo.completed}
-          style={theme.Gutters.regularBMargin}
-        />
         <Button status="error" size="small" onPress={onPressDelete}>
           Delete
         </Button>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -53,7 +63,18 @@ const styles = (theme: ThemeVariables) =>
     },
     titleContainer: {
       flex: 1,
-      paddingRight: theme.MetricsSizes.regular,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginEnd: theme.MetricsSizes.regular,
+    },
+    titleText: {
+      flex: 1,
+    },
+    lineThrough: {
+      textDecorationLine: 'line-through',
+    },
+    checkbox: {
+      borderWidth: 2,
     },
   });
 

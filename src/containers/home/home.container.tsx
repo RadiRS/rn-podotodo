@@ -20,10 +20,7 @@ const HomeContainer = () => {
   return (
     <SafeArea padder>
       <Text variant="title-small">PodoTodo</Text>
-
       <AddTodoForm onPressSubmit={onPressSubmit} />
-
-      <Text>Todo List</Text>
       <FlatList
         data={todos}
         keyExtractor={todo => todo.id}
