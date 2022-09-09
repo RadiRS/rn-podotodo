@@ -6,8 +6,10 @@ on:
       - develop
 
 jobs:
-  android-build:
+  build-and-distribute:
     runs-on: ubuntu-latest
+    environment:
+      name: develop
 
     steps:
       - name: Cancel Previous Runs
@@ -59,26 +61,41 @@ jobs:
         with:
           name: app-dev-release.apk
           path: android/app/build/outputs/apk/dev/release/
-
-  distribution-dev:
-    runs-on: ubuntu-latest
-    needs: [android-build]
-    environment:
-      name: develop
-
-    steps:
-      - name: Distribute app via Firebase App Distribution
+      
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         env:
           firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
           firebaseGroups: ${{ secrets.FIREBASE_GROUPS }}
           firebaseAppId: ${{ secrets.FIREBASE_APP_ID }}
           notes: ${{ github.event.head_commit.message }}
-        run: |
-          yarn global add firebase-tools
-          export PATH="$(yarn global bin):$PATH"
-          firebase \
-            appdistribution:distribute android/app/build/outputs/apk/dev/release/app-dev-release.apk \
-            --app $firebaseAppId \
-            --release-notes "$notes" \
-            --groups "$firebaseGroups" \
-            --token "$firebaseToken"
+        with:
+          appId: $firebaseAppId
+          token: $firebaseToken
+          file: android/app/build/outputs/apk/dev/release/app-dev-release.apk
+          groups: $firebaseGroups
+          releaseNotes: $notes
+
+
+#   distribution-dev:
+#     runs-on: ubuntu-latest
+#     needs: [android-build]
+#     environment:
+#       name: develop
+
+#     steps:
+#       - name: Distribute app via Firebase App Distribution
+#         env:
+#           firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
+#           firebaseGroups: ${{ secrets.FIREBASE_GROUPS }}
+#           firebaseAppId: ${{ secrets.FIREBASE_APP_ID }}
+#           notes: ${{ github.event.head_commit.message }}
+#         run: |
+#           yarn global add firebase-tools
+#           export PATH="$(yarn global bin):$PATH"
+#           firebase \
+#             appdistribution:distribute android/app/build/outputs/apk/dev/release/app-dev-release.apk \
+#             --app $firebaseAppId \
+#             --release-notes "$notes" \
+#             --groups "$firebaseGroups" \
+#             --token "$firebaseToken"
