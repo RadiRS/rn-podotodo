@@ -8,7 +8,6 @@ on:
 jobs:
   android-build:
     runs-on: ubuntu-latest
-    needs: [test]
 
     steps:
       - name: Cancel Previous Runs
