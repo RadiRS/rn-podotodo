@@ -14,16 +14,19 @@ import {
 
 import { api } from '@/services/api';
 import theme from './theme';
+import todo from './todo';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const reducers = combineReducers({
   theme,
+  todo,
   [api.reducerPath]: api.reducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme'],
+  whitelist: ['theme', 'todo'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -51,3 +54,11 @@ const persistor = persistStore(store);
 setupListeners(store.dispatch);
 
 export { store, persistor };
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

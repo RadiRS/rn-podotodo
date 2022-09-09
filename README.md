@@ -1,4 +1,4 @@
-# React Native Boilerplate Project
+# PodoTodo - Todo Application
 
 ![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -6,7 +6,7 @@
 [![Android Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/android-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/android-build.yml)
 [![IOS Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml)
 
-This is a boilerplate for react native project which is include some configuration
+This is a todo application built with React Native
 
 ## Getting Started
 
@@ -31,7 +31,7 @@ git clone https://github.com/RadiRS/rn-podotodo.git your_app_name
 ```
 
 ```
-git clone git@github.com:RadiRS/rn-boilerplate.git your_app_name
+git clone git@github.com:RadiRS/rn-podotodo.git your_app_name
 ```
 
 Enter into project directory and install all dependencies

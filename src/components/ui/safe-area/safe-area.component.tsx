@@ -40,7 +40,7 @@ const styles = (theme: ThemeVariables) =>
       flex: 1,
     },
     padder: {
-      padding: theme.MetricsSizes.regular,
+      paddingHorizontal: theme.MetricsSizes.regular,
     },
   });
 
