@@ -6,41 +6,52 @@ on:
       - develop
 
 jobs:
-  build-and-distribute:
+  test:
     runs-on: ubuntu-latest
-    environment:
-      name: develop
-
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
-
       - name: Check out Git repository
         uses: actions/checkout@v3
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.4.1
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.4.1
         with:
           node-version: 16
           cache: 'yarn'
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
+      - run: yarn lint
+      - run: yarn test
+      
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.4.1
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - name: Cache Gradle Wrapper
         uses: actions/cache@v3.0.8
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
       - name: Cache Gradle Dependencies
         uses: actions/cache@v3.0.8
         with:
@@ -48,21 +59,28 @@ jobs:
           key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-caches-
-
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-
       - name: Build Android Development apk
         run: |
           cd android && ./gradlew assembleDevRelease
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           name: app-dev-release.apk
           path: android/app/build/outputs/apk/dev/release/
-      
-      - name: Firebase App Distribution
+
+  distribution:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: develop
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: app-dev-release.apk
+      - name: Distribute app via Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
@@ -70,27 +88,3 @@ jobs:
           file: android/app/build/outputs/apk/dev/release/app-dev-release.apk
           groups: ${{ secrets.FIREBASE_GROUPS }}
           releaseNotes: ${{ github.event.head_commit.message }}
-
-
-#   distribution-dev:
-#     runs-on: ubuntu-latest
-#     needs: [android-build]
-#     environment:
-#       name: develop
-
-#     steps:
-#       - name: Distribute app via Firebase App Distribution
-#         env:
-#           firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
-#           firebaseGroups: ${{ secrets.FIREBASE_GROUPS }}
-#           firebaseAppId: ${{ secrets.FIREBASE_APP_ID }}
-#           notes: ${{ github.event.head_commit.message }}
-#         run: |
-#           yarn global add firebase-tools
-#           export PATH="$(yarn global bin):$PATH"
-#           firebase \
-#             appdistribution:distribute android/app/build/outputs/apk/dev/release/app-dev-release.apk \
-#             --app $firebaseAppId \
-#             --release-notes "$notes" \
-#             --groups "$firebaseGroups" \
-#             --token "$firebaseToken"
