@@ -8,8 +8,7 @@ import { useTheme } from '@/hooks';
 
 import { navigationRef } from './utils';
 import { RootStackParamList } from './types';
-import { SplashContainer } from '@/containers';
-import AppNavigator from './app.navigator';
+import { HomeContainer, SplashContainer } from '@/containers';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,7 +32,7 @@ const RootNavigator = () => {
           />
           <Stack.Screen
             name="Main"
-            component={AppNavigator}
+            component={HomeContainer}
             options={{ animation: 'none' }}
           />
         </Stack.Navigator>
