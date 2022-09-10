@@ -42,7 +42,11 @@ const HomeContainer = () => {
         }}
       />
       <AddButton onPress={() => setFormVisible(true)} />
-      <AddTodoForm isVisible={isFormVisible} onPressSubmit={onPressSubmit} />
+      <AddTodoForm
+        isVisible={isFormVisible}
+        onPressSubmit={onPressSubmit}
+        setFormVisible={setFormVisible}
+      />
     </SafeArea>
   );
 };
