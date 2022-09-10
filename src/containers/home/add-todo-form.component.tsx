@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Button, Input, Modal } from '@/components/ui';
 import { ThemeVariables } from '@/config/theme/theme';
 import { useTheme } from '@/hooks';
+import { useAppDispatch } from '@/store';
+import { addTodo } from '@/store/todo';
 
-type Props = {
-  onPressSubmit: (todo: string) => void;
-  setFormVisible: (visible: boolean) => void;
-  isVisible: boolean;
-};
+import AddButton from './floating-action-button.component';
 
-const AddTodoForm = ({ onPressSubmit, setFormVisible, isVisible }: Props) => {
-  const [newTodo, setNewTodo] = React.useState<string>('');
+const AddTodoForm = () => {
+  const [newTodo, setNewTodo] = useState<string>('');
+  const [isFormVisible, setFormVisible] = useState(false);
+
   const theme = useTheme();
   const s = styles(theme);
 
-  const extOnPressSubmit = () => {
+  const dispatch = useAppDispatch();
+
+  const onPressSubmit = () => {
     if (!newTodo) {
       return;
     }
 
-    onPressSubmit(newTodo);
+    setFormVisible(false);
+    dispatch(addTodo(newTodo));
 
     setNewTodo('');
   };
@@ -35,19 +38,24 @@ const AddTodoForm = ({ onPressSubmit, setFormVisible, isVisible }: Props) => {
         onChangeText={setNewTodo}
         style={theme.Gutters.regularBMargin}
       />
-      <Button onPress={extOnPressSubmit}>Save</Button>
+      <Button disabled={!newTodo} onPress={onPressSubmit}>
+        Save
+      </Button>
     </View>
   );
 
   return (
-    <Modal
-      variant="bottom"
-      swipeDirection="down"
-      onBackButtonPress={() => setFormVisible(false)}
-      onSwipeComplete={() => setFormVisible(false)}
-      isVisible={isVisible}>
-      {renderContent()}
-    </Modal>
+    <>
+      <AddButton onPress={() => setFormVisible(true)} />
+      <Modal
+        variant="bottom"
+        swipeDirection="down"
+        onBackButtonPress={() => setFormVisible(false)}
+        onSwipeComplete={() => setFormVisible(false)}
+        isVisible={isFormVisible}>
+        {renderContent()}
+      </Modal>
+    </>
   );
 };
 
