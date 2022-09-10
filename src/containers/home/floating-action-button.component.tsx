@@ -15,9 +15,7 @@ const FloatingActionButton = ({ onPress }: FloatingActionButtonProps) => {
 
   return (
     <Pressable onPress={onPress} style={s.container}>
-      <Text variant="large" appearance="alternative">
-        +
-      </Text>
+      <Text variant="title-regular">+</Text>
     </Pressable>
   );
 };
