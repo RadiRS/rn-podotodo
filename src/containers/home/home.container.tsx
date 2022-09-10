@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { SafeArea, Text } from '@/components/ui';
+import { SafeArea } from '@/components/ui';
 import AddButton from './floating-action-button.component';
 
 import { addTodo, deleteTodo, selectTodos, updateTodo } from '@/store/todo';
 import { useAppDispatch, useAppSelector } from '@/store';
 import TodoItem from './todo-item.component';
 import AddTodoForm from './add-todo-form.component';
+import HeaderSection from './header-section.component';
 
 const HomeContainer = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
+  const [isFormVisible, setFormVisible] = useState(false);
 
   const onPressSubmit = (newTodo: string) => {
+    setFormVisible(false);
     dispatch(addTodo(newTodo));
   };
 
   return (
     <SafeArea padder>
-      <Text variant="title-small">PodoTodo</Text>
-      <AddTodoForm onPressSubmit={onPressSubmit} />
+      <HeaderSection />
       <FlatList
         data={todos}
         keyExtractor={todo => todo.id}
@@ -39,7 +41,8 @@ const HomeContainer = () => {
           );
         }}
       />
-      <AddButton />
+      <AddButton onPress={() => setFormVisible(true)} />
+      <AddTodoForm isVisible={isFormVisible} onPressSubmit={onPressSubmit} />
     </SafeArea>
   );
 };

@@ -1,15 +1,16 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View, Modal } from 'react-native';
 
-import { Button } from '@/components/ui';
+import { Button, Input } from '@/components/ui';
 import { ThemeVariables } from '@/config/theme/theme';
 import { useTheme } from '@/hooks';
 
 type Props = {
   onPressSubmit: (todo: string) => void;
+  isVisible: boolean;
 };
 
-const AddTodoForm = ({ onPressSubmit }: Props) => {
+const AddTodoForm = ({ onPressSubmit, isVisible }: Props) => {
   const [newTodo, setNewTodo] = React.useState<string>('');
   const theme = useTheme();
   const s = styles(theme);
@@ -24,27 +25,42 @@ const AddTodoForm = ({ onPressSubmit }: Props) => {
     setNewTodo('');
   };
 
-  return (
-    <View style={theme.Gutters.regularBMargin}>
-      <TextInput
+  const renderContent = () => (
+    <View style={s.formContainer}>
+      <Input
         value={newTodo}
-        placeholder="enter new todo"
+        placeholder="Enter new todo"
         onChangeText={setNewTodo}
-        style={s.input}
       />
       <Button onPress={extOnPressSubmit}>Save</Button>
     </View>
+  );
+
+  return (
+    <Modal
+      animationType="slide"
+      presentationStyle="formSheet"
+      visible={isVisible}>
+      {renderContent()}
+    </Modal>
   );
 };
 
 const styles = (theme: ThemeVariables) =>
   StyleSheet.create({
-    container: {},
-    input: {
-      height: 40,
-      borderWidth: 1,
-      padding: 10,
-      marginBottom: theme.MetricsSizes.regular,
+    container: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      padding: theme.MetricsSizes.regular,
+    },
+    formContainer: {
+      flex: 1,
+      paddingTop: theme.MetricsSizes.large,
+      paddingBottom: theme.MetricsSizes.large,
+      padding: theme.MetricsSizes.regular,
+      backgroundColor: theme.Colors.alternative,
+      // alignItems: 'center',
+      justifyContent: 'space-between',
     },
   });
 
