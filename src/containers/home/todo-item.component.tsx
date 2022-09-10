@@ -55,10 +55,10 @@ const styles = (theme: ThemeVariables) =>
       flexDirection: 'row',
       alignItems: 'center',
       padding: theme.MetricsSizes.regular,
-      borderWidth: 1,
-      borderColor: 'grey',
+      borderWidth: 1.2,
+      borderColor: theme.Colors.secondary,
       marginBottom: theme.MetricsSizes.regular,
-      backgroundColor: theme.Colors.secondary,
+      backgroundColor: theme.Colors.alternative,
       borderRadius: theme.MetricsSizes.small,
     },
     titleContainer: {

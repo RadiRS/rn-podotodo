@@ -1,17 +1,20 @@
 import React from 'react';
-import { StyleSheet, Pressable, Alert } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 
 import { Text } from '@/components/ui';
 import { useTheme } from '@/hooks';
 import { ThemeVariables } from '@/config/theme/theme';
 
-const FloatingActionButton = () => {
-  const theme = useTheme();
+interface FloatingActionButtonProps {
+  onPress: () => void;
+}
 
+const FloatingActionButton = ({ onPress }: FloatingActionButtonProps) => {
+  const theme = useTheme();
   const s = style(theme);
 
   return (
-    <Pressable onPress={() => Alert.alert('Add new task')} style={s.container}>
+    <Pressable onPress={onPress} style={s.container}>
       <Text variant="large" appearance="alternative">
         +
       </Text>
