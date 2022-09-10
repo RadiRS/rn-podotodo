@@ -15,7 +15,7 @@ exports[`<Button /> should render component correcly 1`] = `
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "#3A00E5",
+      "backgroundColor": "#8875FF",
       "borderRadius": 5,
       "height": 45,
       "justifyContent": "center",

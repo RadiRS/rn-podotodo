@@ -7,7 +7,7 @@ import TodoListSection from './todo-list-section.component';
 
 const HomeContainer = () => {
   return (
-    <SafeArea padder>
+    <SafeArea>
       <HeaderSection />
       <TodoListSection />
       <AddTodoForm />
