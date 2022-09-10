@@ -6,4 +6,7 @@ export const AppImage = {
   icon: {
     brightness: require('@/assets/images/brightness.png'),
   },
+  illustration: {
+    taskCompleted: require('@/assets/images/completed.png'),
+  },
 };
