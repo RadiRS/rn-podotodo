@@ -28,10 +28,12 @@ const AddTodoForm = ({ onPressSubmit, setFormVisible, isVisible }: Props) => {
 
   const renderContent = () => (
     <View style={s.formContainer}>
+      <View style={s.bullet} />
       <Input
         value={newTodo}
         placeholder="Enter new todo"
         onChangeText={setNewTodo}
+        style={theme.Gutters.regularBMargin}
       />
       <Button onPress={extOnPressSubmit}>Save</Button>
     </View>
@@ -39,30 +41,37 @@ const AddTodoForm = ({ onPressSubmit, setFormVisible, isVisible }: Props) => {
 
   return (
     <Modal
-      // animationType="slide"
-      // presentationStyle="formSheet"
+      variant="bottom"
+      swipeDirection="down"
       onBackButtonPress={() => setFormVisible(false)}
-      onBackdropPress={() => setFormVisible(false)}
+      onSwipeComplete={() => setFormVisible(false)}
       isVisible={isVisible}>
       {renderContent()}
     </Modal>
   );
 };
 
-const styles = (theme: ThemeVariables) =>
+const styles = (themes: ThemeVariables) =>
   StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'flex-end',
-      padding: theme.MetricsSizes.regular,
+      padding: themes.MetricsSizes.regular,
     },
     formContainer: {
-      paddingTop: theme.MetricsSizes.large,
-      paddingBottom: theme.MetricsSizes.large,
-      padding: theme.MetricsSizes.regular,
-      backgroundColor: theme.Colors.alternative,
-      // alignItems: 'center',
-      justifyContent: 'space-between',
+      borderTopLeftRadius: themes.MetricsSizes.regular,
+      borderTopRightRadius: themes.MetricsSizes.regular,
+      paddingBottom: themes.MetricsSizes.large,
+      padding: themes.MetricsSizes.regular,
+      backgroundColor: themes.Colors.background,
+    },
+    bullet: {
+      width: 30,
+      height: 5,
+      borderRadius: 2.5,
+      backgroundColor: themes.Colors.hint,
+      alignSelf: 'center',
+      marginBottom: themes.MetricsSizes.large,
     },
   });
 

@@ -1,16 +1,19 @@
 import React, { ReactNode } from 'react';
-import RNModal from 'react-native-modal';
-import { SafeAreaView, ViewStyle } from 'react-native';
+import RNModal, { Direction } from 'react-native-modal';
+import { ViewStyle } from 'react-native';
 
 import styles from './modal.styles';
 
 interface ModalProps {
   isVisible: boolean;
   avoidKeyboard?: boolean;
-  onBackButtonPress: () => void;
-  onBackdropPress: () => void;
+  onBackButtonPress?: () => void;
+  onBackdropPress?: () => void;
   children: ReactNode;
   style?: ViewStyle;
+  variant?: 'center' | 'bottom';
+  swipeDirection?: Direction | Direction[];
+  onSwipeComplete: () => void;
 }
 
 const Modal = ({
@@ -18,16 +21,21 @@ const Modal = ({
   isVisible,
   avoidKeyboard = true,
   style,
+  variant,
   ...props
 }: ModalProps) => {
+  const bottomStyle: ViewStyle = variant === 'bottom' ? styles.modalBottom : {};
+
   return (
     <RNModal
-      useNativeDriver
+      animationOut="slideOutDown"
+      animationIn="slideInUp"
       isVisible={isVisible}
-      style={[styles.modal, style]}
+      style={[styles.modal, bottomStyle, style]}
       avoidKeyboard={avoidKeyboard}
+      propagateSwipe
       {...props}>
-      <SafeAreaView>{children}</SafeAreaView>
+      {children}
     </RNModal>
   );
 };
