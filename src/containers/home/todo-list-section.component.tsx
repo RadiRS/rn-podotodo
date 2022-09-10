@@ -2,13 +2,21 @@ import React from 'react';
 import { FlatList } from 'react-native';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { deleteTodo, selectTodos, updateTodo } from '@/store/todo';
+import { deleteTodo, selectTodos, Todo, updateTodo } from '@/store/todo';
 
 import TodoItem from './todo-item.component';
 
 const TodoListSection = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
+
+  const onPressDelete = (id: string) => {
+    dispatch(deleteTodo(id));
+  };
+
+  const onPressComplete = (item: Todo) => {
+    dispatch(updateTodo({ ...item, completed: !item.completed }));
+  };
 
   return (
     <FlatList
@@ -19,12 +27,8 @@ const TodoListSection = () => {
         return (
           <TodoItem
             todo={item}
-            onPressComplete={() =>
-              dispatch(updateTodo({ ...item, completed: !item.completed }))
-            }
-            onPressDelete={() => {
-              dispatch(deleteTodo(item.id));
-            }}
+            onPressComplete={() => onPressComplete(item)}
+            onPressDelete={onPressDelete}
           />
         );
       }}

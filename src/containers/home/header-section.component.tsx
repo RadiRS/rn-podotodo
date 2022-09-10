@@ -35,7 +35,7 @@ const styles = (themes: ThemeVariables) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      paddingVertical: themes.MetricsSizes.regular,
+      padding: themes.MetricsSizes.regular,
     },
   });
 
