@@ -19,7 +19,9 @@ const HeaderSection = () => {
 
   return (
     <View style={extStyle.container}>
-      <Text variant="title-regular">PodoTodo</Text>
+      <Text status="primary" variant="title-regular">
+        PodoTodo
+      </Text>
       <Pressable onPress={toggleTheme}>
         <Text variant="small">Change Theme</Text>
       </Pressable>
