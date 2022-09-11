@@ -105,7 +105,7 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
                 onPress={onPressComplete}
               />
               <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 status={todo.completed ? 'disabled' : 'basic'}
                 style={[s.titleText, todo.completed && s.lineThrough]}>
                 {todo.title}
