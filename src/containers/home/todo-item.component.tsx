@@ -87,7 +87,7 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
       style={[s.container, rTodoContainerStyle]}
       entering={SlideInRight.delay(100)}
       layout={Layout.springify()}>
-      <PanGestureHandler onGestureEvent={panGesture}>
+      <PanGestureHandler onGestureEvent={panGesture} activeOffsetX={-1}>
         <Animated.View style={[s.shadow, rStyle]}>
           <TouchableOpacity
             key={todo.id}
@@ -105,7 +105,7 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
                 onPress={onPressComplete}
               />
               <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 status={todo.completed ? 'disabled' : 'basic'}
                 style={[s.titleText, todo.completed && s.lineThrough]}>
                 {todo.title}

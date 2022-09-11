@@ -1,12 +1,13 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { FlatList } from 'react-native-gesture-handler';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { deleteTodo, selectTodos, Todo, updateTodo } from '@/store/todo';
 
 import TodoItem from './todo-item.component';
 import { AppImage } from '@/assets';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 const TodoListSection = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ const TodoListSection = () => {
     <FlatList
       data={todos}
       scrollEnabled={!!todos.length}
-      keyExtractor={todo => todo.id}
+      keyExtractor={todo => todo.id.toString()}
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={() => (
         <Animated.View
