@@ -1,50 +1,85 @@
-import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { Button } from '@/components/ui';
+import { Button, Input, Modal } from '@/components/ui';
 import { ThemeVariables } from '@/config/theme/theme';
 import { useTheme } from '@/hooks';
+import { useAppDispatch } from '@/store';
+import { addTodo } from '@/store/todo';
 
-type Props = {
-  onPressSubmit: (todo: string) => void;
-};
+import AddButton from './floating-action-button.component';
 
-const AddTodoForm = ({ onPressSubmit }: Props) => {
-  const [newTodo, setNewTodo] = React.useState<string>('');
+const AddTodoForm = () => {
+  const [newTodo, setNewTodo] = useState<string>('');
+  const [isFormVisible, setFormVisible] = useState(false);
+
   const theme = useTheme();
   const s = styles(theme);
 
-  const extOnPressSubmit = () => {
+  const dispatch = useAppDispatch();
+
+  const onPressSubmit = () => {
     if (!newTodo) {
       return;
     }
 
-    onPressSubmit(newTodo);
+    setFormVisible(false);
+    dispatch(addTodo(newTodo));
 
     setNewTodo('');
   };
 
-  return (
-    <View style={theme.Gutters.regularBMargin}>
-      <TextInput
+  const renderContent = () => (
+    <View style={s.formContainer}>
+      <View style={s.bullet} />
+      <Input
         value={newTodo}
-        placeholder="enter new todo"
+        placeholder="Enter new todo"
         onChangeText={setNewTodo}
-        style={s.input}
+        style={theme.Gutters.regularBMargin}
       />
-      <Button onPress={extOnPressSubmit}>Save</Button>
+      <Button disabled={!newTodo} onPress={onPressSubmit}>
+        Save
+      </Button>
     </View>
+  );
+
+  return (
+    <>
+      <AddButton onPress={() => setFormVisible(true)} />
+      <Modal
+        variant="bottom"
+        swipeDirection="down"
+        onBackButtonPress={() => setFormVisible(false)}
+        onSwipeComplete={() => setFormVisible(false)}
+        isVisible={isFormVisible}>
+        {renderContent()}
+      </Modal>
+    </>
   );
 };
 
-const styles = (theme: ThemeVariables) =>
+const styles = (themes: ThemeVariables) =>
   StyleSheet.create({
-    container: {},
-    input: {
-      height: 40,
-      borderWidth: 1,
-      padding: 10,
-      marginBottom: theme.MetricsSizes.regular,
+    container: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      padding: themes.MetricsSizes.regular,
+    },
+    formContainer: {
+      borderTopLeftRadius: themes.MetricsSizes.regular,
+      borderTopRightRadius: themes.MetricsSizes.regular,
+      paddingBottom: themes.MetricsSizes.large,
+      padding: themes.MetricsSizes.regular,
+      backgroundColor: themes.Colors.background,
+    },
+    bullet: {
+      width: 30,
+      height: 5,
+      borderRadius: 2.5,
+      backgroundColor: themes.Colors.hint,
+      alignSelf: 'center',
+      marginBottom: themes.MetricsSizes.large,
     },
   });
 
