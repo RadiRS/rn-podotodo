@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import themes from '@/config/theme/themes';
+import { RootState } from '..';
 
 const slice = createSlice({
   name: 'theme',
@@ -30,6 +31,8 @@ const slice = createSlice({
 });
 
 export const { changeTheme, setDefaultTheme } = slice.actions;
+
+export const selectThemes = (state: RootState) => state.theme;
 
 export default slice.reducer;
 
