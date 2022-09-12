@@ -1,9 +1,12 @@
-name: Android Staging Distribution
+name: Android Production Distribution
 
 on:
+  # release:
+  #   types: [published]
+
   push:
     branches:
-      - staging
+      - main
 
 jobs:
   test:
@@ -28,6 +31,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    environment:
+      name: production
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.10.0
@@ -61,30 +66,41 @@ jobs:
             ${{ runner.os }}-gradle-caches-
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-      - name: Build Android Staging apk
-        run: |
-          cd android && ./gradlew assembleStagRelease
+      - name: Build Android Production bundle
+        run: cd android && ./gradlew bundleProdRelease
+      - name: Sign App Bundle
+        id: sign_app
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: android/app/build/outputs/bundle/prodRelease
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: app-stag-release.apk
-          path: android/app/build/outputs/apk/stag/release/
+          name: app-prod-release.aab
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
   distribution:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: staging
+      name: production
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3.0.0
         with:
-          name: app-stag-release.apk
-      - name: Distribute app via Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+          name: app-prod-release.aab
+      - name: Distribute app to PlayStore (Internal Sharing)
+        uses: r0adkll/upload-google-play@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
-          file: app-stag-release.apk
-          groups: ${{ secrets.FIREBASE_GROUPS }}
-          releaseNotes: ${{ github.event.head_commit.message }}
+          serviceAccountJsonPlainText: ${{ secret.SERVICE_ACCOUNT_JSON }}
+          packageName: com.paceprogrammer.podotodo
+          releaseFiles: app-prod-release.aab
+          track: internalSharing
+          status: inProgress
+          inAppUpdatePriority: 2
+          userFraction: 0.5
+          whatsNewDirectory: release-notes
