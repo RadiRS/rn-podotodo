@@ -95,7 +95,7 @@ jobs:
       - name: Distribute app to PlayStore (Internal Sharing)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: ${{ secret.SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.paceprogrammer.podotodo
           releaseFiles: app-prod-release.aab
           track: internalSharing
