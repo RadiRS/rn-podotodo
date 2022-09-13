@@ -1,11 +1,11 @@
 name: Android Production Distribution
 
 on:
-  push:
-    branches:
-      - main
-  # release:
-  #   types: [published]
+  # push:
+  #   branches:
+  #     - main
+  release:
+    types: [published]
 
 jobs:
   test:

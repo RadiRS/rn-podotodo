@@ -131,10 +131,9 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-
         }
     }
 
@@ -143,10 +142,12 @@ android {
         dev {
             resValue "string", "app_name", "PodoTodo Dev"
             applicationIdSuffix ".dev"
+            signingConfig signingConfigs.debug
         }
         stag {
             resValue "string", "app_name", "PodoTodo Stag"
             applicationIdSuffix ".stag"
+            signingConfig signingConfigs.debug
         }
         prod {
             resValue "string", "app_name", "PodoTodo"
