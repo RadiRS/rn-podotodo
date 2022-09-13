@@ -2,7 +2,6 @@ apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
 
-
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
 ]
@@ -11,7 +10,7 @@ apply from: "../../node_modules/react-native/react.gradle"
 
 def enableSeparateBuildPerCPUArchitecture = false
 
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true 
 
 def jscFlavor = 'org.webkit:android-jsc:+'
 
@@ -31,8 +30,8 @@ android {
         applicationId "com.paceprogrammer.podotodo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 2
+        versionName "0.0.2"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -118,18 +117,23 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('PODOTODO_UPLOAD_STORE_FILE')) {
+                storeFile file(PODOTODO_UPLOAD_STORE_FILE)
+                storePassword PODOTODO_UPLOAD_STORE_PASSWORD
+                keyAlias PODOTODO_UPLOAD_KEY_ALIAS
+                keyPassword  PODOTODO_UPLOAD_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-
         }
     }
 
@@ -138,10 +142,12 @@ android {
         dev {
             resValue "string", "app_name", "PodoTodo Dev"
             applicationIdSuffix ".dev"
+            signingConfig signingConfigs.debug
         }
         stag {
             resValue "string", "app_name", "PodoTodo Stag"
             applicationIdSuffix ".stag"
+            signingConfig signingConfigs.debug
         }
         prod {
             resValue "string", "app_name", "PodoTodo"
