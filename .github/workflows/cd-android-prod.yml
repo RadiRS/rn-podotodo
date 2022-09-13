@@ -100,7 +100,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.paceprogrammer.podotodo
           releaseFiles: app-prod-release.aab
-          track: internalSharing
+          track: internal
           status: inProgress
           inAppUpdatePriority: 2
           userFraction: 0.5
