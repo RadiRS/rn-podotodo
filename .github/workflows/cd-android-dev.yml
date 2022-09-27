@@ -78,18 +78,20 @@ jobs:
     env:
       SA_JSON_KEY: ${{ secrets.SERVICE_ACCOUNT_JSON }}
     steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
       - name: Download artifact
         uses: actions/download-artifact@v3.0.0
         with:
           name: app-dev-release.apk
-      - name: Genarate File
-        run: echo $SA_JSON_KEY | base64 -d -i > $RUNNER_TEMP/service-account.json
+      - name: Genarate Files .json
+        run: echo $SA_JSON_KEY | base64 -d -i > service-account.json
       - name: Distribute app via Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         with:
           appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
           # token: ${{ secrets.FIREBASE_TOKEN }}
-          serviceCredentialsFile: $RUNNER_TEMP/service-account.json
+          serviceCredentialsFile: service-account.json
           file: app-dev-release.apk
           groups: ${{ secrets.FIREBASE_GROUPS }}
           releaseNotes: ${{ github.event.head_commit.message }}
