@@ -76,10 +76,12 @@ jobs:
     environment:
       name: develop
     env:
-      SA_JSON_KEY: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+      SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+      FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      FIREBASE_GROUPS: ${{ secrets.FIREBASE_GROUPS }}
+      RELEASE_NOTES: ${{ github.event.head_commit.message }}
+      GOOGLE_APPLICATION_CREDENTIALS: service-account.json
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
       - name: Download artifact
         uses: actions/download-artifact@v3.0.0
         with:
@@ -87,11 +89,19 @@ jobs:
       - name: Genarate Files .json
         run: echo $SA_JSON_KEY | base64 -d -i > service-account.json
       - name: Distribute app via Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          # token: ${{ secrets.FIREBASE_TOKEN }}
-          serviceCredentialsFile: service-account.json
-          file: app-dev-release.apk
-          groups: ${{ secrets.FIREBASE_GROUPS }}
-          releaseNotes: ${{ github.event.head_commit.message }}
+        run: |
+          yarn global add firebase-tools
+          export PATH="$(yarn global bin):$PATH"
+          firebase \
+            appdistribution:distribute app-dev-release.apk \
+            --app $FIREBASE_APP_ID_ANDROID \
+            --release-notes "$RELEASE_NOTES" \
+            --groups "$FIREBASE_GROUPS"
+      # - name: Distribute app via Firebase App Distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+      #   with:
+      #     appId: $FIREBASE_APP_ID_ANDROID
+      #     groups: $FIREBASE_GROUPS
+      #     releaseNotes: $RELEASE_NOTES
+      #     serviceCredentialsFile: service-account.json
+      #     file: app-dev-release.apk
