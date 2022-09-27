@@ -1,58 +1,55 @@
-import { View, StyleSheet, Pressable, Image, ImageStyle } from 'react-native';
 import React from 'react';
+import { View, StyleSheet, Pressable, Image } from 'react-native';
 
-import { changeTheme, selectThemes } from '@/store/theme';
+import { useAppDispatch } from '@/store';
+import { changeTheme } from '@/store/theme';
+
+import { AppImage } from '@/assets';
 import { useTheme } from '@/hooks';
 import { Text } from '@/components/ui';
-import { ThemeVariables } from '@/config/theme/theme';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { AppImage } from '@/assets';
 
 const HeaderSection = () => {
   const dispatch = useAppDispatch();
-  const themes = useTheme();
-  const extStyle = styles(themes);
-  const currentTheme = useAppSelector(selectThemes);
+  const { darkMode } = useTheme();
+  const styles = useStyles();
 
   const toggleTheme = () => {
-    dispatch(changeTheme({ darkMode: !currentTheme.darkMode }));
-  };
-
-  const colorStyle: ImageStyle = {
-    tintColor: !currentTheme.darkMode ? themes.Colors.dark : 'orange',
+    dispatch(changeTheme({ darkMode: !darkMode }));
   };
 
   return (
-    <View style={extStyle.container}>
+    <View style={styles.container}>
       <Text status="primary" variant="title-regular">
-        PodoTodo
+        My Tasks
       </Text>
-      <Pressable onPress={toggleTheme} style={extStyle.press}>
-        <Image
-          source={AppImage.icon.brightness}
-          style={[extStyle.img, colorStyle]}
-        />
-        {/* <Text variant="small">Change Theme</Text> */}
+      <Pressable onPress={toggleTheme} style={styles.press}>
+        <Image source={AppImage.icon.brightness} style={styles.img} />
       </Pressable>
     </View>
   );
 };
 
-const styles = (themes: ThemeVariables) =>
-  StyleSheet.create({
+const useStyles = () => {
+  const { MetricsSizes, Colors, darkMode } = useTheme();
+
+  const styles = StyleSheet.create({
     container: {
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      padding: themes.MetricsSizes.regular,
+      padding: MetricsSizes.regular,
     },
     press: {
-      padding: themes.MetricsSizes.small,
+      padding: MetricsSizes.small,
     },
     img: {
       width: 20,
       height: 20,
+      tintColor: darkMode ? Colors.primary : Colors.dark,
     },
   });
+
+  return styles;
+};
 
 export default HeaderSection;

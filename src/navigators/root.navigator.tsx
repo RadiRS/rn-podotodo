@@ -30,11 +30,7 @@ const RootNavigator = () => {
             component={SplashContainer}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="Main"
-            component={HomeContainer}
-            options={{ animation: 'none' }}
-          />
+          <Stack.Screen name="Main" component={HomeContainer} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
