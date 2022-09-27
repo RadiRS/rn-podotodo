@@ -9,7 +9,6 @@
  * Colors
  */
 export const Colors = {
-  // Example colors:
   transparent: 'rgba(0,0,0,0)',
   background: '#F1F1F1',
   splashBackground: '#212529',
@@ -19,7 +18,7 @@ export const Colors = {
   dark: '#212529',
   textDisabled: '#9C9C9C',
   alternative: '#ffffff',
-  primary: '#8875FF',
+  primary: '#F2994A',
   secondary: '#F1F1F1',
   hint: '#AFB1B6',
   info: '#8AC0FF',
