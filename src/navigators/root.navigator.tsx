@@ -14,9 +14,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // @refresh reset
 const RootNavigator = () => {
-  const { darkMode, NavigationTheme, Layout } = useTheme();
-  const barStyle = darkMode ? 'light-content' : 'dark-content';
-  const backgroundColor = NavigationTheme.colors.card;
+  const { NavigationTheme, Layout, Colors } = useTheme();
+  const barStyle = 'light-content';
+  const backgroundColor = Colors.primary;
 
   return (
     <GestureHandlerRootView style={Layout.fill}>
