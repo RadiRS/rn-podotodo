@@ -68,47 +68,38 @@ jobs:
             ${{ runner.os }}-gradle-caches-
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
-      - name: Creating necessary files
+      - name: Decoding base64 key into a files
         run: |
           echo $LOCAL_PROPERTIES_BASE64 | base64 -d -i > android/local.properties
           echo $KEYSTORE_BASE64 | base64 -d -i > android/app/podotodo.keystore
       - name: Build Android Production bundle
         run: cd android && ./gradlew bundleProdRelease
-      # - name: Sign App Bundle
-      #   id: sign_app
-      #   uses: r0adkll/sign-android-release@v1
-      #   with:
-      #     releaseDirectory: android/app/build/outputs/bundle/prodRelease
-      #     signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-      #     alias: ${{ secrets.ANDROID_ALIAS }}
-      #     keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
-      #     keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           name: app-prod-release.aab
           path: android/app/build/outputs/bundle/prodRelease
 
-  # distribution:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   environment:
-  #     name: production
-  #   steps:
-  #     - name: Check out Git repository
-  #       uses: actions/checkout@v3
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v3.0.0
-  #       with:
-  #         name: app-prod-release.aab
-  #     - name: Distribute app to PlayStore (Internal Sharing)
-  #       uses: r0adkll/upload-google-play@v1
-  #       with:
-  #         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-  #         packageName: com.paceprogrammer.podotodo
-  #         releaseFiles: app-prod-release.aab
-  #         track: internal
-  #         status: draft
-  #         inAppUpdatePriority: 2
-  #         # userFraction: 0.5
-  #         whatsNewDirectory: release-notes
+  distribution:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: production
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: app-prod-release.aab
+      - name: Distribute app to PlayStore (Internal Testing)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.paceprogrammer.podotodo
+          releaseFiles: app-prod-release.aab
+          track: internal
+          status: draft
+          inAppUpdatePriority: 2
+          # userFraction: 0.5
+          whatsNewDirectory: release-notes
