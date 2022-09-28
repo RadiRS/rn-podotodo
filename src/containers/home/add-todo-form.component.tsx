@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Button, Input, Modal } from '@/components/ui';
-import { ThemeVariables } from '@/config/theme/theme';
 import { useTheme } from '@/hooks';
 import { useAppDispatch } from '@/store';
 import { addTodo } from '@/store/todo';
@@ -12,10 +12,9 @@ import AddButton from './floating-action-button.component';
 const AddTodoForm = () => {
   const [newTodo, setNewTodo] = useState<string>('');
   const [isFormVisible, setFormVisible] = useState(false);
-
-  const theme = useTheme();
-  const s = styles(theme);
-
+  const { t } = useTranslation();
+  const { Gutters } = useTheme();
+  const styles = useStyles();
   const dispatch = useAppDispatch();
 
   const onPressSubmit = () => {
@@ -30,16 +29,16 @@ const AddTodoForm = () => {
   };
 
   const renderContent = () => (
-    <View style={s.formContainer}>
-      <View style={s.bullet} />
+    <View style={styles.formContainer}>
+      <View style={styles.bullet} />
       <Input
         value={newTodo}
-        placeholder="Enter new todo"
+        placeholder={t('placeholders.enterTask')}
         onChangeText={setNewTodo}
-        style={theme.Gutters.regularBMargin}
+        style={Gutters.regularBMargin}
       />
       <Button disabled={!newTodo} onPress={onPressSubmit}>
-        Save
+        {t('actions.save')}
       </Button>
     </View>
   );
@@ -59,28 +58,31 @@ const AddTodoForm = () => {
   );
 };
 
-const styles = (themes: ThemeVariables) =>
-  StyleSheet.create({
+const useStyles = () => {
+  const { MetricsSizes, Colors } = useTheme();
+
+  return StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'flex-end',
-      padding: themes.MetricsSizes.regular,
+      padding: MetricsSizes.regular,
     },
     formContainer: {
-      borderTopLeftRadius: themes.MetricsSizes.regular,
-      borderTopRightRadius: themes.MetricsSizes.regular,
-      paddingBottom: themes.MetricsSizes.large,
-      padding: themes.MetricsSizes.regular,
-      backgroundColor: themes.Colors.background,
+      borderTopLeftRadius: MetricsSizes.regular,
+      borderTopRightRadius: MetricsSizes.regular,
+      paddingBottom: MetricsSizes.large,
+      padding: MetricsSizes.regular,
+      backgroundColor: Colors.background,
     },
     bullet: {
       width: 30,
       height: 5,
       borderRadius: 2.5,
-      backgroundColor: themes.Colors.hint,
+      backgroundColor: Colors.hint,
       alignSelf: 'center',
-      marginBottom: themes.MetricsSizes.large,
+      marginBottom: MetricsSizes.large,
     },
   });
+};
 
 export default AddTodoForm;

@@ -1,7 +1,10 @@
 export default {
   welcome: 'Welcome to PodoTodo',
   actions: {
-    continue: 'Continue',
+    save: 'Save',
+  },
+  placeholders: {
+    enterTask: 'Enter new task',
   },
   wording: {
     emptyState: 'What do you want to do today?',

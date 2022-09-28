@@ -9,16 +9,15 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
-
-import { Button, Text } from '@/components/ui';
-import { ThemeVariables } from '@/config/theme/theme';
-import { useTheme } from '@/hooks';
-import { Todo } from '@/store/todo';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+
+import { Todo } from '@/store/todo';
+import { useTheme } from '@/hooks';
+import { Button, Text } from '@/components/ui';
 
 interface TodoProps {
   todo: Todo;
@@ -30,11 +29,11 @@ const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 const ITEM_HEIGHT = 60;
 
 const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
-  const theme = useTheme();
-  const s = styles(theme);
+  const { MetricsSizes, Colors } = useTheme();
+  const s = useStyles();
   const translateX = useSharedValue(0);
   const opacity = useSharedValue(1);
-  const marginVertical = useSharedValue(theme.MetricsSizes.small / 2);
+  const marginVertical = useSharedValue(MetricsSizes.small / 2);
   const itemHeight = useSharedValue(ITEM_HEIGHT);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -100,7 +99,7 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
                 size={25}
                 bounceEffect={0}
                 isChecked={todo.completed}
-                fillColor={theme.Colors.primary}
+                fillColor={Colors.primary}
                 innerIconStyle={s.checkbox}
                 onPress={onPressComplete}
               />
@@ -123,10 +122,12 @@ const TodoItem = ({ todo, onPressComplete, onPressDelete }: TodoProps) => {
   );
 };
 
-const styles = (theme: ThemeVariables) =>
-  StyleSheet.create({
+const useStyles = () => {
+  const { MetricsSizes, Colors } = useTheme();
+
+  return StyleSheet.create({
     container: {
-      marginHorizontal: theme.MetricsSizes.regular,
+      marginHorizontal: MetricsSizes.regular,
       justifyContent: 'center',
     },
     shadow: {
@@ -141,9 +142,9 @@ const styles = (theme: ThemeVariables) =>
     touch: {
       flexDirection: 'row',
       alignItems: 'center',
-      padding: theme.MetricsSizes.regular,
-      backgroundColor: theme.Colors.alternative,
-      borderRadius: theme.MetricsSizes.small,
+      padding: MetricsSizes.regular,
+      backgroundColor: Colors.alternative,
+      borderRadius: MetricsSizes.small,
     },
     titleContainer: {
       flex: 1,
@@ -166,8 +167,9 @@ const styles = (theme: ThemeVariables) =>
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: theme.MetricsSizes.regular,
+      borderRadius: MetricsSizes.regular,
     },
   });
+};
 
 export default TodoItem;
