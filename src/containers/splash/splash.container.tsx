@@ -1,5 +1,5 @@
-import { StatusBar } from 'react-native';
 import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 
 import { navigateAndSimpleReset } from '@/navigators';

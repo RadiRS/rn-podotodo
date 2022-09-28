@@ -1,12 +1,10 @@
 export default {
-  welcome: 'Welcome to React Native Boilerplate by RadiRS',
+  welcome: 'Welcome to PodoTodo',
   actions: {
     continue: 'Continue',
   },
-  example: {
-    helloUser: 'Hello {{name}}',
-    labels: {
-      userId: 'Enter a user id',
-    },
+  wording: {
+    emptyState: 'What do you want to do today?',
+    emptyInstruction: 'Tap + to add your tasks',
   },
 };
