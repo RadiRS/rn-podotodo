@@ -15,7 +15,7 @@ import {
 } from 'react-native-gesture-handler';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-import { Todo } from '@/store/todo';
+import { Todo } from '@/features/todo/services';
 import { useTheme } from '@/hooks';
 import { Button, Text } from '@/components/ui';
 

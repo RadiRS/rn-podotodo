@@ -8,7 +8,12 @@ import { useTranslation } from 'react-i18next';
 import EmptyList from '@/assets/images/empty-list';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { deleteTodo, selectTodos, Todo, updateTodo } from '@/store/todo';
+import {
+  deleteTodo,
+  selectTodos,
+  Todo,
+  updateTodo,
+} from '@/features/todo/services';
 
 import { useTheme } from '@/hooks';
 import { Text } from '@/components/ui';

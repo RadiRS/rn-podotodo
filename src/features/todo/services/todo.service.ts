@@ -6,7 +6,7 @@ export const getTodos = (builder: EndpointBuilder<any, any, any>) =>
   builder.query<Todo[], void>({
     query: () => '/todos',
     providesTags: ['Todos'],
-    transformResponse: (res: Todo[]) => res.sort((a, b) => b.id - a.id),
+    // transformResponse: (res: Todo[]) => res.sort((a, b) => b.id - a.id),
   });
 
 export const addTodo = (builder: EndpointBuilder<any, any, any>) =>

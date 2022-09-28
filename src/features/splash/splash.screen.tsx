@@ -5,7 +5,7 @@ import RNBootSplash from 'react-native-bootsplash';
 import { navigateAndSimpleReset } from '@/navigators';
 import { SafeArea } from '@/components/ui';
 
-const SplashContainer = () => {
+const SplashScreen = () => {
   useEffect(() => {
     init();
   }, []);
@@ -28,4 +28,4 @@ const SplashContainer = () => {
   );
 };
 
-export default SplashContainer;
+export default SplashScreen;

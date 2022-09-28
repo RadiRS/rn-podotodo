@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Input, Modal } from '@/components/ui';
 import { useTheme } from '@/hooks';
 import { useAppDispatch } from '@/store';
-import { addTodo } from '@/store/todo';
+import { addTodo } from '@/features/todo/services';
 
 import AddButton from './floating-action-button.component';
 

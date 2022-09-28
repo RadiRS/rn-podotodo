@@ -8,7 +8,7 @@ import { useTheme } from '@/hooks';
 
 import { navigationRef } from './utils';
 import { RootStackParamList } from './types';
-import { HomeContainer, SplashContainer } from '@/containers';
+import { SplashScreen, TodoListScreen } from '@/features/screens';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,10 +27,10 @@ const RootNavigator = () => {
           initialRouteName="Splash">
           <Stack.Screen
             name="Splash"
-            component={SplashContainer}
+            component={SplashScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Main" component={HomeContainer} />
+          <Stack.Screen name="Main" component={TodoListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
