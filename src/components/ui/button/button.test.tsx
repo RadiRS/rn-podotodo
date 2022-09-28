@@ -6,7 +6,7 @@ import { renderWithRedux } from '@/helpers';
 import { fireEvent } from '@testing-library/react-native';
 
 describe('<Button />', () => {
-  it('should render component correcly', () => {
+  it('should render component correctly', () => {
     const rendered = renderWithRedux(<Button />).toJSON();
 
     expect(rendered).toMatchSnapshot();
