@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
   persistReducer,
   persistStore,
@@ -13,13 +14,12 @@ import {
 } from 'redux-persist';
 
 import { api } from '@/services/api';
-import theme from './theme';
-import todo from './todo';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { themeReducer } from './theme';
+import { todoReducer } from '@/features/todo/services';
 
 const reducers = combineReducers({
-  theme,
-  todo,
+  theme: themeReducer,
+  todo: todoReducer,
   [api.reducerPath]: api.reducer,
 });
 
@@ -56,7 +56,6 @@ setupListeners(store.dispatch);
 export { store, persistor };
 
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`

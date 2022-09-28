@@ -8,15 +8,15 @@ import { useTheme } from '@/hooks';
 
 import { navigationRef } from './utils';
 import { RootStackParamList } from './types';
-import { HomeContainer, SplashContainer } from '@/containers';
+import { SplashScreen, TodoListScreen } from '@/features/screens';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // @refresh reset
 const RootNavigator = () => {
-  const { darkMode, NavigationTheme, Layout } = useTheme();
-  const barStyle = darkMode ? 'light-content' : 'dark-content';
-  const backgroundColor = NavigationTheme.colors.card;
+  const { NavigationTheme, Layout, Colors } = useTheme();
+  const barStyle = 'light-content';
+  const backgroundColor = Colors.primary;
 
   return (
     <GestureHandlerRootView style={Layout.fill}>
@@ -27,10 +27,10 @@ const RootNavigator = () => {
           initialRouteName="Splash">
           <Stack.Screen
             name="Splash"
-            component={SplashContainer}
+            component={SplashScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Main" component={HomeContainer} />
+          <Stack.Screen name="Main" component={TodoListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

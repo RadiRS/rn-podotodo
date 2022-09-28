@@ -86,7 +86,7 @@ jobs:
         uses: actions/download-artifact@v3.0.0
         with:
           name: app-stag-release.apk
-      - name: Genarate Files .json
+      - name: Creating service-account.json file
         run: echo $SERVICE_ACCOUNT_JSON | base64 -d -i > service-account.json
       - name: Distribute app via Firebase App Distribution
         run: |

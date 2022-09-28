@@ -1,20 +1,7 @@
 import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
-// import data from '../../../data/db.json';
 
-export interface Todo {
-  id: string;
-  title: string;
-  completed: boolean;
-  timestamp: string;
-}
-
-//! Dummy todo
-// const initTodos = data.todos.map(todo => ({
-//   ...todo,
-//   id: todo.id.toString(),
-//   timestamp: new Date().toISOString(),
-// }));
+import { Todo } from './types';
 
 interface InitialStateTodo {
   todos: Todo[];

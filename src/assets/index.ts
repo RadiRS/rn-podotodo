@@ -8,5 +8,6 @@ export const AppImage = {
   },
   illustration: {
     taskCompleted: require('@/assets/images/completed.png'),
+    empty: require('@/assets/images/empty-list'),
   },
 };
