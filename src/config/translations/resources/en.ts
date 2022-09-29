@@ -1,5 +1,6 @@
 export default {
   welcome: 'Welcome to PodoTodo',
+  todoTitle: 'My Tasks',
   actions: {
     save: 'Save',
   },
