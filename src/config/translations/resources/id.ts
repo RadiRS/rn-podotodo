@@ -1,12 +1,10 @@
 export default {
-  welcome: 'Selamat datang di React Native Boilerplate',
+  welcome: 'Selamat datang di PodoTodo',
   actions: {
     continue: 'Lanjutkan',
   },
-  example: {
-    helloUser: 'Halo {{name}}',
-    labels: {
-      userId: 'Masukkan id user',
-    },
+  wording: {
+    emptyState: 'Apa yang ingin kamu lakukan hari ini?',
+    emptyInstruction: 'Tekan + untuk menambahkan task baru',
   },
 };

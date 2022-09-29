@@ -38,6 +38,7 @@ const styles = (theme: ThemeVariables) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: theme.Colors.background,
     },
     padder: {
       paddingHorizontal: theme.MetricsSizes.regular,

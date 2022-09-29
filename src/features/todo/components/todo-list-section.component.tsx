@@ -1,17 +1,32 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { FlatList } from 'react-native-gesture-handler';
+import { SvgXml } from 'react-native-svg';
+import { useTranslation } from 'react-i18next';
+
+import EmptyList from '@/assets/images/empty-list';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { deleteTodo, selectTodos, Todo, updateTodo } from '@/store/todo';
+import {
+  deleteTodo,
+  selectTodos,
+  Todo,
+  updateTodo,
+} from '@/features/todo/services';
 
+import { useTheme } from '@/hooks';
+import { Text } from '@/components/ui';
+
+const { height } = Dimensions.get('screen');
 import TodoItem from './todo-item.component';
-import { AppImage } from '@/assets';
 
 const TodoListSection = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
+
+  const { Gutters } = useTheme();
+  const { t } = useTranslation();
 
   const onPressDelete = (id: string) => {
     dispatch(deleteTodo(id));
@@ -32,10 +47,9 @@ const TodoListSection = () => {
           style={styles.emptyContainer}
           entering={FadeIn}
           exiting={FadeOut}>
-          <Image
-            source={AppImage.illustration.taskCompleted}
-            style={styles.img}
-          />
+          <SvgXml width={250} height={250} xml={EmptyList} />
+          <Text style={Gutters.smallBMargin}>{t('wording.emptyState')}</Text>
+          <Text variant="small">{t('wording.emptyInstruction')}</Text>
         </Animated.View>
       )}
       renderItem={({ item }) => {
@@ -55,11 +69,7 @@ const styles = StyleSheet.create({
   emptyContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  img: {
-    width: 400,
-    height: 400,
-    resizeMode: 'contain',
+    height: height / 1.5,
   },
 });
 

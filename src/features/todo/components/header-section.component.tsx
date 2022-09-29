@@ -1,6 +1,8 @@
-import React from 'react';
-import { View, StyleSheet, Pressable, Image } from 'react-native';
+import React, { useRef } from 'react';
+import { View, StyleSheet, Pressable, Animated, Easing } from 'react-native';
+import LottieView from 'lottie-react-native';
 
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '@/store';
 import { changeTheme } from '@/store/theme';
 
@@ -10,42 +12,60 @@ import { Text } from '@/components/ui';
 
 const HeaderSection = () => {
   const dispatch = useAppDispatch();
-  const { darkMode } = useTheme();
   const styles = useStyles();
+  const { t } = useTranslation();
+  const { darkMode } = useTheme();
+  const animationProgress = useRef(
+    new Animated.Value(darkMode ? 0 : 0.5),
+  ).current;
 
   const toggleTheme = () => {
+    toggleAnimation();
     dispatch(changeTheme({ darkMode: !darkMode }));
+  };
+
+  const toggleAnimation = () => {
+    Animated.timing(animationProgress, {
+      toValue: darkMode ? 0.5 : 0,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
     <View style={styles.container}>
       <Text status="primary" variant="title-regular">
-        My Tasks
+        {t('todoTitle')}
       </Text>
       <Pressable onPress={toggleTheme} style={styles.press}>
-        <Image source={AppImage.icon.brightness} style={styles.img} />
+        <LottieView
+          source={AppImage.lottie.lightDark}
+          progress={animationProgress}
+          style={styles.img}
+        />
       </Pressable>
     </View>
   );
 };
 
 const useStyles = () => {
-  const { MetricsSizes, Colors, darkMode } = useTheme();
+  const { MetricsSizes } = useTheme();
 
   const styles = StyleSheet.create({
     container: {
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      padding: MetricsSizes.regular,
+      paddingHorizontal: MetricsSizes.regular,
     },
     press: {
       padding: MetricsSizes.small,
     },
     img: {
-      width: 20,
-      height: 20,
-      tintColor: darkMode ? Colors.primary : Colors.dark,
+      right: -3,
+      width: 40,
+      height: 40,
     },
   });
 
