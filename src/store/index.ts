@@ -15,18 +15,20 @@ import {
 
 import { api } from '@/services/api';
 import { themeReducer } from './theme';
+import { initReducer } from './init';
 import { todoReducer } from '@/features/todo/services';
 
 const reducers = combineReducers({
   theme: themeReducer,
   todo: todoReducer,
+  init: initReducer,
   [api.reducerPath]: api.reducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme', 'todo'],
+  whitelist: ['theme', 'todo', 'init'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

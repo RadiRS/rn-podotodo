@@ -60,6 +60,7 @@
     "@react-navigation/native-stack": "^6.8.0",
     "@reduxjs/toolkit": "^1.8.5",
     "i18next": "^21.9.1",
+    "lottie-react-native": "^5.1.4",
     "react": "18.1.0",
     "react-i18next": "^11.18.4",
     "react-native": "0.70.1",
