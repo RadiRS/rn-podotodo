@@ -21,6 +21,12 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('local.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -30,8 +36,8 @@ android {
         applicationId "com.paceprogrammer.podotodo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 5
+        versionName "0.0.5"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
@@ -102,6 +108,7 @@ android {
             include (*reactNativeArchitectures())
         }
     }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -110,11 +117,11 @@ android {
             keyPassword 'android'
         }
         release {
-            if (project.hasProperty('PODOTODO_UPLOAD_STORE_FILE')) {
-                storeFile file(PODOTODO_UPLOAD_STORE_FILE)
-                storePassword PODOTODO_UPLOAD_STORE_PASSWORD
-                keyAlias PODOTODO_UPLOAD_KEY_ALIAS
-                keyPassword  PODOTODO_UPLOAD_KEY_PASSWORD
+            if (keystorePropertiesFile.exists()){
+                storeFile file(keystoreProperties['storeFile'])
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storePassword keystoreProperties['storePassword']
             }
         }
     }
@@ -123,7 +130,7 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            // signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -143,6 +150,7 @@ android {
         }
         prod {
             resValue "string", "app_name", "PodoTodo"
+            signingConfig signingConfigs.release
         }
     }
 

@@ -42,7 +42,7 @@ export default function () {
       Variables,
       // @ts-ignore to prevent multiple themes handling
       ...themeConfig
-    } = themes[currentTheme] || {};
+    } = themes[currentTheme as keyof typeof themes] || {};
 
     variables = Variables;
     partialTheme = themeConfig || {};

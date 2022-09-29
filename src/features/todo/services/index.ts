@@ -7,13 +7,6 @@ export const todoApi = api.injectEndpoints({
     addTodo: addTodo(builder),
     updateTodo: updateTodo(builder),
     deleteTodo: deleteTodo(builder),
-    // addTodo: builder.mutation({
-    //   query: todo => ({
-    //     url: '/todos',
-    //     method: 'POST',
-    //     body: todo,
-    //   }),
-    // }),
   }),
 
   overrideExisting: true,
@@ -25,3 +18,7 @@ export const {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
 } = todoApi;
+
+export { default as todoReducer } from './todo.slice';
+export * from './todo.slice';
+export * from './types';

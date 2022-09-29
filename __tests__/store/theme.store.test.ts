@@ -1,7 +1,8 @@
-import reducer, {
+import {
   changeTheme,
   setDefaultTheme,
   ThemeState,
+  themeReducer as reducer,
 } from '@/store/theme';
 
 /**
@@ -52,13 +53,13 @@ test('should set initial theme value', () => {
   expect(result).toEqual({ ...data, darkMode: null });
 });
 
-test('should set darkmode to true', () => {
+test('should set darkMode to true', () => {
   const result = reducer(data, changeTheme({ darkMode: true }));
 
   expect(result).toEqual({ ...data, darkMode: true });
 });
 
-test('should set darkmode to false', () => {
+test('should set darkMode to false', () => {
   const result = reducer(data, changeTheme({ darkMode: false }));
 
   expect(result).toEqual({ ...data, darkMode: false });
