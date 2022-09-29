@@ -13,5 +13,6 @@ export const AppImage = {
   lottie: {
     taskList: require('@/assets/lottie/checklist.json'),
     lightDark: require('@/assets/lottie/light-dark.json'),
+    welcome: require('@/assets/lottie/welcome.json'),
   },
 };
