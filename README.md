@@ -6,6 +6,10 @@
 [![Android Production Distribution](https://github.com/RadiRS/rn-podotodo/actions/workflows/cd-android-prod.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/cd-android-prod.yml)
 [![IOS Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml)
 
+<p>&nbsp;</p>
+
+![podotodo](data/banner.png)
+
 This is a todo application built with React Native
 
 ## Getting Started
@@ -13,6 +17,7 @@ This is a todo application built with React Native
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
 - [Yarn (Package Manager)](https://yarnpkg.com)
 
 - [Android Studio for Android Development](https://developer.android.com/studio)
@@ -45,7 +50,6 @@ Run the project via command line
 yarn android   //android
 yarn ios       //ios
 ```
-
 
 <p>&nbsp;</p>
 
