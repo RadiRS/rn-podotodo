@@ -99,7 +99,7 @@ jobs:
           packageName: com.paceprogrammer.podotodo
           releaseFiles: app-prod-release.aab
           track: internal
-          status: draft
+          # status: draft
           inAppUpdatePriority: 2
           # userFraction: 0.5
           whatsNewDirectory: release-notes
