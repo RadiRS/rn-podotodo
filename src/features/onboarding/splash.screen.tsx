@@ -16,7 +16,7 @@ const SplashScreen = () => {
   };
 
   return (
-    <SafeArea testID="welcome">
+    <SafeArea testID="splash">
       <StatusBar hidden />
     </SafeArea>
   );

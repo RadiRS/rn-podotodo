@@ -44,6 +44,7 @@ const TodoListSection = () => {
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={() => (
         <Animated.View
+          testID="empty-todo"
           style={styles.emptyContainer}
           entering={FadeIn}
           exiting={FadeOut}>
