@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -21,9 +21,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // @refresh reset
 const RootNavigator = () => {
-  const { NavigationTheme, Layout, Colors } = useTheme();
-  const barStyle = 'light-content';
+  const { NavigationTheme, Layout, Colors, darkMode } = useTheme();
   const backgroundColor = Colors.primary;
+  const barStyle =
+    Platform.OS === 'android'
+      ? 'light-content'
+      : darkMode
+      ? 'light-content'
+      : 'dark-content';
 
   const isFirstInstall = useAppSelector(selectIsFirstInstall);
 
