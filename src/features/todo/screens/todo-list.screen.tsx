@@ -7,7 +7,7 @@ import TodoListSection from '../components/todo-list-section.component';
 
 const TodoListScreen = () => {
   return (
-    <SafeArea>
+    <SafeArea testID="home">
       <HeaderSection />
       <TodoListSection />
       <AddTodoForm />

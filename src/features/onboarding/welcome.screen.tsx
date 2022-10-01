@@ -23,7 +23,7 @@ const WelcomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="welcome">
       <View style={styles.content}>
         <LottieView
           autoPlay
