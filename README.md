@@ -1,16 +1,16 @@
-# PodoTodo - Todo Application
-
 ![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Continuous Integration](https://github.com/RadiRS/rn-podotodo/actions/workflows/ci.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ci.yml)
 [![Android Production Distribution](https://github.com/RadiRS/rn-podotodo/actions/workflows/cd-android-prod.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/cd-android-prod.yml)
 [![IOS Build](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml/badge.svg)](https://github.com/RadiRS/rn-podotodo/actions/workflows/ios-build.yml)
 
-<p>&nbsp;</p>
+# PodoTodo - Todo Application
+
+This is a todo application built with React Native
 
 ![podotodo](data/banner.png)
 
-This is a todo application built with React Native
+<a href='https://play.google.com/store/apps/details?id=com.paceprogrammer.podotodo&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="200" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## Getting Started
 
@@ -57,11 +57,16 @@ yarn ios       //ios
 
 ### Break down into end to end tests
 
-Explain what these tests test and why.
+Unit Tests and Component Test with Jest. End-to-End Test with Detox.
+
 For testing just run script command
 
 ```
 yarn test
+```
+
+```
+yarn e2e-ios
 ```
 
 <p>&nbsp;</p>
@@ -75,6 +80,10 @@ Setup your signed apk by follow [this](https://facebook.github.io/react-native/d
 ```
 yarn build-android
 ```
+
+### iOS
+
+Setup your iOS app by follow [this](https://reactnative.dev/docs/publishing-to-app-store) tutorial
 
 <p>&nbsp;</p>
 
