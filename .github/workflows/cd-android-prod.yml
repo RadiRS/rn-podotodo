@@ -101,5 +101,5 @@ jobs:
           track: internal
           status: inProgress # completed, inProgress, halted & draft
           inAppUpdatePriority: 2
-          userFraction: 1.0
+          userFraction: 0.5
           whatsNewDirectory: release-notes
