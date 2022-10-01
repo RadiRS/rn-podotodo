@@ -38,8 +38,9 @@ const HeaderSection = () => {
       <Text status="primary" variant="title-regular">
         {t('todoTitle')}
       </Text>
-      <Pressable onPress={toggleTheme} style={styles.press}>
+      <Pressable testID="theme-tap" onPress={toggleTheme} style={styles.press}>
         <LottieView
+          testID={darkMode ? 'lottie-dark' : 'lottie-light'}
           source={AppImage.lottie.lightDark}
           progress={animationProgress}
           style={styles.img}

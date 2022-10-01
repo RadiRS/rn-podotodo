@@ -33,6 +33,7 @@ const AddTodoForm = () => {
       <View style={styles.bullet} />
       <Input
         value={newTodo}
+        testID="text-input-task"
         placeholder={t('placeholders.enterTask')}
         onChangeText={setNewTodo}
         style={Gutters.regularBMargin}
